@@ -1,0 +1,28 @@
+name: Deployment - Prod
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and Run Commands
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: player.jmse.cloud
+          username: root
+          key: ${{ secrets.SSH_KEY }}
+          port: 2
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            cd /var/www/project/player
+            git pull
+            bun run build
+            cd /var/www/project
+            docker compose stop
+            docker compose up -d
+          

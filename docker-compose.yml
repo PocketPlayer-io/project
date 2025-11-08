@@ -1,0 +1,19 @@
+services:
+  frontend_player:
+    container_name: "${CONTAINER_NUXT}"
+    build: .
+    volumes:
+      - ./player:/var/www/demo
+    ports:
+      - "${PORT_NUXT}:3000"
+  pocketbase_player:
+    image: ghcr.io/muchobien/pocketbase:latest
+    container_name: "${CONTAINER_POCKETBASE}"
+    restart: unless-stopped
+    ports:
+      - "${PORT_POCKETBASE}:8090"
+    healthcheck: # optional, recommended since v0.10.0
+      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5

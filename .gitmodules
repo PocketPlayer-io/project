@@ -1,0 +1,4 @@
+[submodule "player"]
+	path = player
+	url = git@github.com:PocketPlayer-io/player.git
+	branch = main

@@ -15,7 +15,7 @@ jobs:
           host: player.jmse.cloud
           username: root
           key: ${{ secrets.SSH_KEY }}
-          port: 2
+          port: 22
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
